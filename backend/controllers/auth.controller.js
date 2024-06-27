@@ -3,6 +3,10 @@ const bcrypt = require("bcryptjs")
 const User = require("../models/user.model")
 const generateToken = require("../utils/generateToken")
 
+
+//@desc Register a new user
+//@route POST /api/users/register
+//@access public
 const registerUser = asyncHandler( async(request, response) => {
     const { username, email, password } = request.body
 
@@ -29,6 +33,9 @@ const registerUser = asyncHandler( async(request, response) => {
      
 })
 
+//@desc Login user
+//@route POST /api/users/login
+//@access public
 const loginUser = asyncHandler( async(request, response) => {
     const { email, password } = request.body
 
@@ -57,10 +64,13 @@ const loginUser = asyncHandler( async(request, response) => {
     })
 })
 
+//@desc Get user complete information
+//@route GET /api/users/profile
+//@access private
 const profile = asyncHandler( async(request, response) => {
-    response.status(200).json({
-        message: "profile"
-    })
+    const user = await User.findById(request.user._id).select("-password")
+    
+    response.status(200).json(user)
 })
 
 module.exports = {
