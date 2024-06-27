@@ -9,6 +9,7 @@ const getUserCourse = asyncHandler( async(request, response) => {
     response.status(200).json({ courses })
 })
 
+
 const createCourse = asyncHandler( async(request, response) => {
     const { courseName } = request.body
 
